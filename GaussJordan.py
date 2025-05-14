@@ -1,8 +1,10 @@
+#Realiza una operación entre dos filas (combinación lineal).
 def RowOperation(R1: list, R2: list, multiplier1, multiplier2):
     for i in range (0, len(R1)): #int i = 0; i < R1.length; i++
         R2[i] = multiplier2*R1[i]+multiplier1*R2[i]
     return R2
 
+#Aplica la eliminación gaussiana a una matriz.
 def Gauss(Matrix: list[list]):
     newMatrix = Matrix
     matrixLen = len(Matrix[0])
@@ -15,12 +17,14 @@ def Gauss(Matrix: list[list]):
             j+=1
     return newMatrix;
 
+#Multiplica una fila por un número de tipo floating point.
 def SingleRowOperationFloat(R1: list, multiplier):
     newR1 = R1
     for i in range(0, len(R1)): #(int i = 0; i < R1.length; i++)
         newR1[i] = R1[i]*multiplier
     return R1
 
+#Aplica la eliminación de Jordan (reducción gaussiana total) a una matriz de forma Gauss
 def Jordan(Matrix: list[list]):
     newMatrix = Matrix
     matrixLen = len(newMatrix[0])
@@ -34,8 +38,10 @@ def Jordan(Matrix: list[list]):
                     newMatrix[j] = RowOperation(newMatrix[i], newMatrix[j], -newMatrix[i][i], newMatrix[j][i]);
     return newMatrix
 
+#Aplica Gauss seguido de Jordan a una matriz.
 def GaussJordan(Matrix: list[list]): return Jordan(Gauss(Matrix))
 
+#Elimina las filas que son completamente ceros de una matriz.
 def removeRowsOfZero(Matrix: list[list]):
     length = len(Matrix)
     resultMatrix: list[list] = []
@@ -48,6 +54,7 @@ def removeRowsOfZero(Matrix: list[list]):
         if(keepRow): resultMatrix.append(Matrix[i])
     return resultMatrix
 
+#Verifica si un sistema de ecuaciones tiene solución.
 def hasSolution(reducedEqMatrix: list[list]):
     length = len(reducedEqMatrix)
     hasSln = True
@@ -64,6 +71,7 @@ def hasSolution(reducedEqMatrix: list[list]):
         i+=1
     return hasSln
 
+#Resuelve un sistema de ecuaciones lineales.
 def equationSystemSolver(eqAsMatrix: list[list]):
     resultMat = removeRowsOfZero(Jordan(removeRowsOfZero(Gauss(eqAsMatrix))))
     length = len(resultMat[0])
