@@ -80,5 +80,5 @@ def getInverse(matrix: list[list]):
         if(len(matrix) > 1 and len(matrix[0]) > 1):
             adjugate = transpose(getCofactors(matrix))
             return multiplyMatrixByNumber((1/determinant), adjugate)
-        else: return [[1/matrix[0][0]]] #the inverse of a single element matrix is itself
+        else: return [[1/matrix[0][0]]] #the inverse of a single element matrix is 1/itself
     else: return "La matriz es singular."
