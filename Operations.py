@@ -22,6 +22,7 @@ def ProductoPunto(v1, v2):
         print("Error: Los vectores deben tener el mismo tamaño.")
         return sum(v1[i] * v2[i] for i in range(len(v1))) #Multiplica los vectores en la misma posicion y dsp los suma
 
+from laura import *
 
 #Parte Ricardo
 
@@ -68,8 +69,8 @@ from InverseMatrix import *
 from GaussJordan import *
 
 """Lee una matriz desde la entrada del usuario"""
-def leer_arreglo():
-    entrada = input("Ingrese matriz como 'filas,elementos...': ").strip()
+def leer_arreglo(msg = "Ingrese matriz"):
+    entrada = input(msg+" como 'filas,elementos...': ").strip()
     partes = entrada.split(',')
     if len(partes) < 2:
         print("Error: Formato incorrecto. Ejemplo: '2,1,2,3,4'")
@@ -109,6 +110,3 @@ def main():
     """Función principal del programa"""
     print("=== CALCULADORA DE ARREGLOS ===")
     memoria = leer_arreglo()
-
-##co
-main()
