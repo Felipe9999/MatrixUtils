@@ -18,10 +18,14 @@ def reshape(a, FilasN, ColumnasN):
 
 """Producto punto"""
 def ProductoPunto(v1, v2):
-    if len(v1) != len(v2): #verifica que la longitud de los vectores sea igual
-        print("Error: Los vectores deben tener el mismo tamaño.")
-        return sum(v1[i] * v2[i] for i in range(len(v1))) #Multiplica los vectores en la misma posicion y dsp los suma
+    if len(v1) != len(v2):#verifica que la longitud de los vectores sea igual
+        print("Los vectores deben tener el mismo tamaño.")
+        return None  # Retornamos None para manejar el error
 
+    resultado = 0
+    for i in range(len(v1)): #Multiplica los vectores en la misma posicion y dsp los suma
+        resultado += v1[i] * v2[i]
+    return resultado
 
 #Parte Ricardo
 
