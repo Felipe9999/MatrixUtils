@@ -3,7 +3,8 @@ def getDeterminant(matrix: list[list]):
     determinant = 0
     if (len(matrix) == len(matrix[0])):
         length = len(matrix)
-        if (length == 2):
+        if(length == 1): determinant = matrix[0][0]
+        elif (length == 2):
             determinant = matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
         else:
             for i in range(0, length):
