@@ -27,7 +27,9 @@ def matrixToString(matrix: list):
 def mainUI():
     option = -1
     while(option != 0):
+        option = -1
         a = getMatrix("Ingrese su primera matriz o vector")
+        print(matrixToString(a))
         while(option != 13 and option != 0):
             print(
                 "Seleccione una opción:",
