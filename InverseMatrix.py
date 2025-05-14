@@ -76,6 +76,9 @@ def transpose(matrix: list[list]):
 #Calcula la inversa de una matriz cuadrada.
 def getInverse(matrix: list[list]):
     determinant = getDeterminant(matrix)
-    adjugate = transpose(getCofactors(matrix))
-    if(determinant != 0): return multiplyMatrixByNumber((1/determinant), adjugate)
+    if(determinant != 0):
+        if(len(matrix) > 1 and len(matrix[0]) > 1):
+            adjugate = transpose(getCofactors(matrix))
+            return multiplyMatrixByNumber((1/determinant), adjugate)
+        else: return [[1/matrix[0][0]]] #the inverse of a single element matrix is itself
     else: return "La matriz es singular."
