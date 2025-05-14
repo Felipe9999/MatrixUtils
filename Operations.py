@@ -109,3 +109,6 @@ def main():
     """Función principal del programa"""
     print("=== CALCULADORA DE ARREGLOS ===")
     memoria = leer_arreglo()
+
+##co
+main()

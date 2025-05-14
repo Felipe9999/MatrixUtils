@@ -1,3 +1,4 @@
+#Calcula el determinante de una matriz cuadrada.
 def getDeterminant(matrix: list[list]):
     determinant = 0
     if (len(matrix) == len(matrix[0])):
@@ -22,6 +23,7 @@ def getDeterminant(matrix: list[list]):
         print("La matriz no es cuadrada!")
     return determinant
 
+#Elimina una fila y una columna específica de una matriz.
 def removeRowColAt(matrix: list[list], row, col):
     newMatrix: list[list] = []
     for i in range(0, len(matrix)-1):
@@ -34,6 +36,7 @@ def removeRowColAt(matrix: list[list], row, col):
             newMatrix[i].append(matrix[currentRow][currentCol])
     return newMatrix
 
+#Calcula la matriz de cofactores.
 def getCofactors(matrix: list[list]):
     cofactors: list[list] = []
     if (len(matrix) == len(matrix[0])):
@@ -51,7 +54,7 @@ def getCofactors(matrix: list[list]):
         print("La matriz no es cuadrada!")
     return cofactors
 
-
+#Multiplica todos los elementos de una matriz por un número.
 def multiplyMatrixByNumber(number, matrix: list[list]):
     result: list[list] = []
     for i in range(0, len(matrix)):
@@ -60,7 +63,7 @@ def multiplyMatrixByNumber(number, matrix: list[list]):
             result[i].append(number * matrix[i][j])
     return result
 
-
+#Calcula la transpuesta de una matriz.
 def transpose(matrix: list[list]):
     transposed: list[list] = []
     for i in range(0, len(matrix[0])):
@@ -69,7 +72,7 @@ def transpose(matrix: list[list]):
             transposed[i].append(matrix[j][i])
     return transposed
 
-
+#Calcula la inversa de una matriz cuadrada.
 def getInverse(matrix: list[list]):
     determinant = getDeterminant(matrix)
     adjugate = transpose(getCofactors(matrix))
