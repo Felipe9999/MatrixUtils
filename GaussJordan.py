@@ -14,8 +14,11 @@ def Gauss(Matrix: list[list]):
         #for j in range(i+1, matrixLen): #(int j = i+1; j < matrixLen-1; j++)
         #    newMatrix[j] = RowOperation(Matrix[i], Matrix[j], -Matrix[i][i], Matrix[j][i])
         j = i+1
+        pivot = 0
+        while(pivot < matrixLen and Matrix[i][pivot] == 0): pivot+=1 #move the pivot to where it belongs
+        if(pivot == matrixLen): pivot-=1
         while (j < matrixLen and j < len(newMatrix)):
-            row = RowOperation(Matrix[i], Matrix[j], -Matrix[i][i], Matrix[j][i])
+            row = RowOperation(Matrix[i], Matrix[j], -Matrix[i][pivot], Matrix[j][pivot])
             if(not row is None): newMatrix[j] = row
             j+=1
     return newMatrix
@@ -32,13 +35,16 @@ def Jordan(Matrix: list[list]):
     newMatrix = Matrix
     matrixLen = len(newMatrix[0])
     for i in range(len(newMatrix)-1, -1, -1): #(int i = newMatrix.length-1; i >= 0; i--)
-        currentVal = newMatrix[i][i]
+        pivot = 0
+        while(pivot < matrixLen and Matrix[i][pivot] == 0): pivot+=1 #move the pivot to where it belongs
+        if(pivot == matrixLen): pivot-=1
+        currentVal = newMatrix[i][pivot]
         if(currentVal != 0):
-            operator = 1/newMatrix[i][i]
+            operator = 1/newMatrix[i][pivot]
             if(operator != 0):
                 SingleRowOperationFloat(newMatrix[i], operator)
                 for j in range(i-1, -1, -1): #(int j = i-1; j >= 0; j--)
-                    row = RowOperation(newMatrix[i], newMatrix[j], -newMatrix[i][i], newMatrix[j][i])
+                    row = RowOperation(newMatrix[i], newMatrix[j], -newMatrix[i][pivot], newMatrix[j][pivot])
                     if(not row is None): newMatrix[j] = row
     return newMatrix
 
