@@ -26,7 +26,7 @@ def leer_arreglo(msg = "Ingrese matriz"):
     columnas = len(elementos) // filas
     return [elementos[i*columnas:(i+1)*columnas] for i in range(filas)]
 
-""" OPT 1:Suma de arreglos - Lee una matriz desde la entrada del usuario"""
+#OPT 1:Suma de arreglos - Lee una matriz desde la entrada del usuario
 def suma_arreglo(matriz_a, matriz_b):
     #res = [[0]*len(matriz_a) for _ in range(len(matriz_a[0]))]
     res = []
@@ -37,7 +37,7 @@ def suma_arreglo(matriz_a, matriz_b):
             res[i].append(matriz_a[i][j] + matriz_b[i][j])
     return res
 
-""" OPT 2:Cambiar de forma a una matriz - Cambia la forma de una matriz"""
+#OPT 2:Cambiar de forma a una matriz - Cambia la forma de una matriz
 def reshape(a, FilasN, ColumnasN):
     elementos = [elem for fila in a for elem in fila] #recorre cada gila y cala columana y los guarda en un anueva lista
     if len(elementos) != FilasN * ColumnasN:  #verifica si la nueva lista tiene el mismo numeri de elementos
@@ -45,7 +45,7 @@ def reshape(a, FilasN, ColumnasN):
         return None
     return [elementos[i*ColumnasN:(i+1)*ColumnasN] for i in range(FilasN)]  #divide la lista de elemntos en sublistas de longitud ColumnasN y se crean las FilasN
 
-""" OPT 3:Producto punto """
+#OPT 3:Producto punto
 def ProductoPunto(v1, v2):
     if len(v1) != len(v2): #verifica que la longitud de los vectores sea igual
         print("Error: Los vectores deben tener el mismo tamaño.")
@@ -83,14 +83,14 @@ def DotProductWrapper(v1: list, v2: list):
         print("El producto punto solo se puede aplicar en vectores")
         return None
 
-""" OPT 4: Selecciona una columna específica de una matriz"""
+#OPT 4: Selecciona una columna específica de una matriz
 def seleccionar_columna(matriz, columna): #matriz, Columna (indice que se quiere extraer)
     columna_resultado = []
     for fila in matriz: #recorre cada fila
         columna_resultado.append(fila[columna-1])#extrae el valor correspondiente a la columa y lo agrega a la lista
     return columna_resultado
 
-""" OPT 5: Media de una matriz - Calcula la media de todos los elementos de una matriz"""
+#OPT 5: Media de una matriz - Calcula la media de todos los elementos de una matriz
 def media_matriz(matriz):
     total = 0
     for fila in matriz: #recoore cada fila
@@ -105,7 +105,7 @@ def media_matriz(matriz):
         print("Error: La matriz está vacía.")
     return total / elementos #calcula el promedio
 
-""" OPT 6:Multiplica una matriz por un escalar"""
+#OPT 6:Multiplica una matriz por un escalar
 def multiplicar_escalar(matriz, escalar):
     resultado = []
     for fila in matriz: #recorre cada fila
@@ -115,7 +115,7 @@ def multiplicar_escalar(matriz, escalar):
         resultado.append(nueva_fila)
     return resultado
 
-""" OPT 7: Producto por matriz - Multiplica dos matrices"""
+#OPT 7: Producto por matriz - Multiplica dos matrices
 def producto_matrices(matriz_a, matriz_b):
     resultado = []
     for i in range(len(matriz_a)):  # filas de A
@@ -128,7 +128,7 @@ def producto_matrices(matriz_a, matriz_b):
         resultado.append(fila_resultado)
     return resultado
 
-""" OPT 8: Suma de matrices - suma dos matrices elemento por elemento"""
+#OPT 8: Suma de matrices - suma dos matrices elemento por elemento
 def suma_matrices(matriz_a, matriz_b):
     res = [[0]*len(matriz_a[0]) for _ in range(len(matriz_a))]
     for i in range(len(matriz_a)):
@@ -136,7 +136,7 @@ def suma_matrices(matriz_a, matriz_b):
             res[i][j] = matriz_a[i][j] + matriz_b[i][j]
     return res
 
-""" OPT 9: Calcular determinante - Calcula el determinante de una matriz cuadrada."""
+#OPT 9: Calcular determinante - Calcula el determinante de una matriz cuadrada.
 def determinante_matrices(matriz):
     n = len(matriz)
     det = 1.0
@@ -215,7 +215,7 @@ def evaluar_suma(matriz_a, matriz_b):
         print("Error de dimensión")
         return False
 
-""" Funcion encargada de evaluar si la matriz es cuadrada """
+#Funcion encargada de evaluar si la matriz es cuadrada
 def evaluar_determinante(matriz):
     if len(matriz[0]) == len(matriz):
         return True
