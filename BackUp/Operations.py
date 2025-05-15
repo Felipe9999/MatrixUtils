@@ -22,7 +22,6 @@ def ProductoPunto(v1, v2):
         print("Error: Los vectores deben tener el mismo tamaño.")
         return sum(v1[i] * v2[i] for i in range(len(v1))) #Multiplica los vectores en la misma posicion y dsp los suma
 
-from laura import *
 
 #Parte Ricardo
 
@@ -65,8 +64,6 @@ def multiplicar_escalar(matriz, escalar):
 
 
 #Parte Juan Felipe (en los archivos respectivos, se importa al main para usar las funciones)
-from InverseMatrix import *
-from GaussJordan import *
 
 """Lee una matriz desde la entrada del usuario"""
 def leer_arreglo(msg = "Ingrese matriz"):
