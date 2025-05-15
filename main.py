@@ -260,10 +260,9 @@ def getDeterminant(matrix: list[list]):
     return determinant
 
 def mainUI():
-
-
     option = -1
     while option != 0:
+        option = -1 #El valor de option tiene que ser cambiado para evitar problemas al limpiar pantalla. NO ELIMINAR.
         a = getMatrix()
         print(matrixToString(a))
         while option != 13 and option != 0:
@@ -337,25 +336,23 @@ def mainUI():
                 case 13:
                     os.system('cls' if os.name == 'nt' else 'clear')
                     print("Pantalla limpiada y memoria reiniciada.")
-                    a = getMatrix("Ingrese una nueva matriz")
                 case 0:
                     print("Saliendo del programa...")
                 case _:
                     print("Operación inválida. Intente de nuevo.")
-
-            if result is None:
-                print("Error: No se pudo realizar la operación.")
-            if isinstance(result, float):
-                result
-                print('\033[92m El resultado de la operación es: \033[0m')
-                print(f'\033[92m {result} \033[0m')
-            if isinstance(result, list):
-                a = result
-                print('\033[92m El resultado de la operación es: \033[0m')
-                print(f'\033[92m {matrixToString(result)} \033[0m')
-            elif isinstance(result, str):
-                print('\033[92m El resultado de la operación es: \033[0m')
-                print(f'\033[92m {result} \033[0m')
+            if(option !=13 and option != 0):
+                if(result is None):
+                    print("Error: No se pudo realizar la operación.")
+                if isinstance(result, float):
+                    print('\033[92m El resultado de la operación es: \033[0m')
+                    print(f'\033[92m {result} \033[0m')
+                if isinstance(result, list):
+                    a = result
+                    print('\033[92m El resultado de la operación es: \033[0m')
+                    print(f'\033[92m{matrixToString(result)} \033[0m')
+                elif isinstance(result, str):
+                    print('\033[92m El resultado de la operación es: \033[0m')
+                    print(f'\033[92m {result} \033[0m')
 
 if __name__ == "__main__":
     mainUI()
