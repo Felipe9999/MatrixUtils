@@ -52,6 +52,37 @@ def ProductoPunto(v1, v2):
         return None
     return sum(v1[i] * v2[i] for i in range(len(v1))) #Multiplica los vectores en la misma posicion y dsp los suma
 
+def toMatrix(vectorOrMatrix: list):
+    if(isinstance(vectorOrMatrix[0], list)): return vectorOrMatrix
+    else: return [vectorOrMatrix]
+
+def toVector(vectorAsMatrix: list[list]):
+    parsedVector: list = []
+    if(len(vectorAsMatrix[0]) == 1): #Vertical vector
+        for i in range(0, len(vectorAsMatrix)):
+            parsedVector.append(vectorAsMatrix[i][0])
+        return parsedVector
+    elif(len(vectorAsMatrix) == 1): #Horizontal vector
+        for i in range(0, len(vectorAsMatrix[0])):
+            parsedVector.append(vectorAsMatrix[0][i])
+        return parsedVector
+    else:
+        return None
+
+def DotProductWrapper(v1: list, v2: list):
+    parsedV1: list = []
+    parsedV2: list = []
+    if(isinstance(v1[0], list)):
+        parsedV1 = toVector(v1)
+    else: parsedV1 = v1
+    if(isinstance(v2[0], list)):
+        parsedV2 = toVector(v2)
+    else: parsedV2 = v2
+    if(isinstance(parsedV1, list) and isinstance(parsedV2, list)): return ProductoPunto(parsedV1, parsedV2)
+    else:
+        print("El producto punto solo se puede aplicar en vectores")
+        return None
+
 """ OPT 4: Selecciona una columna específica de una matriz"""
 def seleccionar_columna(matriz, columna): #matriz, Columna (indice que se quiere extraer)
     columna_resultado = []
@@ -135,7 +166,7 @@ def determinante_matrices(matriz):
     if intercambios % 2 != 0:
         det = -det
     return det
-""" OPT 10: Inversa de una matriz - Calcula la inversa de una matriz cuadrada"""
+# OPT 10: Inversa de una matriz - Calcula la inversa de una matriz cuadrada
 def getInverse(matrix: list[list]):
     determinant = getDeterminant(matrix)
     if(determinant != 0):
@@ -145,7 +176,7 @@ def getInverse(matrix: list[list]):
         else: return [[1/matrix[0][0]]] #the inverse of a single element matrix is 1/itself
     else: return "La matriz es singular."
 
-""" OPT 11: Transpuesta de una matriz - Calcula la transpuesta de una matriz"""
+# OPT 11: Transpuesta de una matriz - Calcula la transpuesta de una matriz
 def transpose(matrix: list[list]):
     transposed: list[list] = []
     for i in range(0, len(matrix[0])):
@@ -161,22 +192,21 @@ def matrixToString(matrix: list):
             matrixStr += "|\t"
             for j in range(0, len(matrix[0])):
                 matrixStr += str(matrix[i][j]) + "\t"
-            matrixStr += "|"
-            if(i != len(matrixStr)-1): matrixStr += "\n"
+            matrixStr += "|\n"
     elif(isinstance(matrix, list)):
         for i in range(0, len(matrix)):
             matrixStr += "|\t"+str(matrix[i])+"\t|"
-            if(i != len(matrixStr)-1): matrixStr += "\n"
+            matrixStr += "\n"
     return matrixStr
 
-""" Funcion encargada de evaluar si la matriz es cuadrada """
+# Funcion encargada de evaluar si el # de columnas de la matriz a es igual al # de filas de la matriz b
 def evaluar_producto(matriz_a, matriz_b):
     if len(matriz_a[0]) == len(matriz_b):
         return True
     else:
         print("Error de dimensión")
         return False
-""" Funcion encargada de evaluar si la matriz es cuadrada """
+# Funcion encargada de evaluar si la matriz a tiene el mismo tamaño que la matriz b
 def evaluar_suma(matriz_a, matriz_b):
     if len(matriz_a) == len(matriz_b):
         if len(matriz_a[0]) == len(matriz_b[0]):
@@ -193,7 +223,7 @@ def evaluar_determinante(matriz):
         print("Error de dimensión")
         return False
 
-"""Multiplica todos los elementos de una matriz por un número."""
+# Multiplica todos los elementos de una matriz por un número.
 def multiplyMatrixByNumber(number, matrix: list[list]):
     result: list[list] = []
     for i in range(0, len(matrix)):
@@ -202,7 +232,7 @@ def multiplyMatrixByNumber(number, matrix: list[list]):
             result[i].append(number * matrix[i][j])
     return result
 
-""" Calcula la matriz de cofactores. """
+# Calcula la matriz de cofactores.
 def getCofactors(matrix: list[list]):
     cofactors: list[list] = []
     if (len(matrix) == len(matrix[0])):
@@ -220,7 +250,7 @@ def getCofactors(matrix: list[list]):
         print("La matriz no es cuadrada!")
     return cofactors
 
-"""Elimina una fila y una columna específica de una matriz."""
+# Elimina una fila y una columna específica de una matriz.
 def removeRowColAt(matrix: list[list], row, col):
     newMatrix: list[list] = []
     for i in range(0, len(matrix)-1):
@@ -233,7 +263,7 @@ def removeRowColAt(matrix: list[list], row, col):
             newMatrix[i].append(matrix[currentRow][currentCol])
     return newMatrix
 
-""" Calcula el determinante de una matriz cuadrada. """
+# Calcula el determinante de una matriz cuadrada.
 def getDeterminant(matrix: list[list]):
     determinant = 0
     if (len(matrix) == len(matrix[0])):
@@ -263,7 +293,7 @@ def mainUI():
     option = -1
     while option != 0:
         option = -1 #El valor de option tiene que ser cambiado para evitar problemas al limpiar pantalla. NO ELIMINAR.
-        a = getMatrix()
+        a = getMatrix("Ingrese su primera matriz o vector")
         print(matrixToString(a))
         while option != 13 and option != 0:
             print(
@@ -300,8 +330,8 @@ def mainUI():
                     cols = int(input("Ingrese el número de columnas: "))
                     result = reshape(a, rows, cols)
                 case 3:
-                    b = getMatrix("Ingrese su segunda matriz")
-                    result = ProductoPunto(a, b)
+                    b = getMatrix("Ingrese su segundo vector")
+                    result = DotProductWrapper(a, b)
                 case 4:
                     col = int(input("Escoja la columna: "))
                     result = seleccionar_columna(a, col)
@@ -347,7 +377,7 @@ def mainUI():
                     print('\033[92m El resultado de la operación es: \033[0m')
                     print(f'\033[92m {result} \033[0m')
                 if isinstance(result, list):
-                    a = result
+                    a = toMatrix(result)
                     print('\033[92m El resultado de la operación es: \033[0m')
                     print(f'\033[92m{matrixToString(result)} \033[0m')
                 elif isinstance(result, str):
