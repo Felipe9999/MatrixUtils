@@ -1,4 +1,4 @@
-#Realiza una operación entre dos filas de una matriz.
+#Realiza una operación entre dos filas (combinación lineal).
 def RowOperation(R1: list, R2: list, multiplier1, multiplier2):
     for i in range (0, len(R1)): #int i = 0; i < R1.length; i++
         R2[i] = multiplier2*R1[i]+multiplier1*R2[i]
@@ -15,7 +15,7 @@ def Gauss(Matrix: list[list]):
         while (j < matrixLen and j < len(newMatrix)):
             newMatrix[j] = RowOperation(Matrix[i], Matrix[j], -Matrix[i][i], Matrix[j][i])
             j+=1
-    return newMatrix
+    return newMatrix;
 
 #Multiplica una fila por un número de tipo floating point.
 def SingleRowOperationFloat(R1: list, multiplier):
@@ -35,10 +35,10 @@ def Jordan(Matrix: list[list]):
             if(operator != 0):
                 SingleRowOperationFloat(newMatrix[i], operator)
                 for j in range(i-1, -1, -1): #(int j = i-1; j >= 0; j--)
-                    newMatrix[j] = RowOperation(newMatrix[i], newMatrix[j], -newMatrix[i][i], newMatrix[j][i])
+                    newMatrix[j] = RowOperation(newMatrix[i], newMatrix[j], -newMatrix[i][i], newMatrix[j][i]);
     return newMatrix
 
-#Aplica Gauss seguido de Jordan a una matriz, para reducción Gauss-Jordan completa.
+#Aplica Gauss seguido de Jordan a una matriz.
 def GaussJordan(Matrix: list[list]): return Jordan(Gauss(Matrix))
 
 #Elimina las filas que son completamente ceros de una matriz.

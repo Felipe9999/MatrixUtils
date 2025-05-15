@@ -18,14 +18,10 @@ def reshape(a, FilasN, ColumnasN):
 
 """Producto punto"""
 def ProductoPunto(v1, v2):
-    if len(v1) != len(v2):#verifica que la longitud de los vectores sea igual
-        print("Los vectores deben tener el mismo tamaño.")
-        return None  # Retornamos None para manejar el error
+    if len(v1) != len(v2): #verifica que la longitud de los vectores sea igual
+        print("Error: Los vectores deben tener el mismo tamaño.")
+        return sum(v1[i] * v2[i] for i in range(len(v1))) #Multiplica los vectores en la misma posicion y dsp los suma
 
-    resultado = 0
-    for i in range(len(v1)): #Multiplica los vectores en la misma posicion y dsp los suma
-        resultado += v1[i] * v2[i]
-    return resultado
 
 #Parte Ricardo
 
@@ -68,12 +64,10 @@ def multiplicar_escalar(matriz, escalar):
 
 
 #Parte Juan Felipe (en los archivos respectivos, se importa al main para usar las funciones)
-from InverseMatrix import *
-from GaussJordan import *
 
 """Lee una matriz desde la entrada del usuario"""
-def leer_arreglo():
-    entrada = input("Ingrese matriz como 'filas,elementos...': ").strip()
+def leer_arreglo(msg = "Ingrese matriz"):
+    entrada = input(msg+" como 'filas,elementos...': ").strip()
     partes = entrada.split(',')
     if len(partes) < 2:
         print("Error: Formato incorrecto. Ejemplo: '2,1,2,3,4'")
