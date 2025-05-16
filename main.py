@@ -364,19 +364,19 @@ def mainUI():
                 case 12:
                     result = equationSystemSolver(a)
                 case 13:
-                    os.system('cls' if os.name == 'nt' else 'clear')
-                    print("Pantalla limpiada y memoria reiniciada.")
+                    os.system('cls' if os.name == 'nt' else 'clear') #TODO: Esto no funciona para limpiar la pantalla en IntelliJ
+                    print("Pantalla limpiada y memoria reiniciada.") #Ref: https://www.geeksforgeeks.org/clear-screen-python/
                 case 0:
                     print("Saliendo del programa...")
                 case _:
                     print("Operación inválida. Intente de nuevo.")
             if(option !=13 and option != 0):
-                if(result is None):
-                    print("Error: No se pudo realizar la operación.")
+                #if(result is None): #No es necesario hacer esto ya que las funciones tienen sus propios prints para errores
+                    #print("Error: No se pudo realizar la operación.")
                 if isinstance(result, float):
                     print('\033[92m El resultado de la operación es: \033[0m')
                     print(f'\033[92m {result} \033[0m')
-                if isinstance(result, list):
+                elif isinstance(result, list):
                     a = toMatrix(result)
                     print('\033[92m El resultado de la operación es: \033[0m')
                     print(f'\033[92m{matrixToString(result)} \033[0m')
@@ -384,5 +384,5 @@ def mainUI():
                     print('\033[92m El resultado de la operación es: \033[0m')
                     print(f'\033[92m {result} \033[0m')
 
-if __name__ == "__main__":
+if __name__ == "__main__": #Ref: https://realpython.com/if-name-main-python/ probably unnecessary in this context but idc
     mainUI()
