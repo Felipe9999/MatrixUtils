@@ -23,7 +23,7 @@ def Gauss(Matrix: list[list]):
             if(not row is None): newMatrix[j] = row
             else: newMatrix[j] = Matrix[j]
             j+=1
-    return newMatrix
+    return RowsOfZeroToBottom(newMatrix)
 
 #Multiplica una fila por un número de tipo floating point.
 def SingleRowOperationFloat(R1: list, multiplier):
@@ -49,7 +49,19 @@ def Jordan(Matrix: list[list]):
                     row = RowOperation(newMatrix[i], newMatrix[j], -newMatrix[i][pivot], newMatrix[j][pivot])
                     if(not row is None): newMatrix[j] = row
                     else: newMatrix[j] = Matrix[j]
-    return newMatrix
+    return RowsOfZeroToBottom(newMatrix)
+
+#Crea una matriz en la que todas las filas de cero quedan abajo
+def RowsOfZeroToBottom(matrix: list[list]):
+    columnLen = len(matrix[0])
+    length = len(matrix)
+    newMat = removeRowsOfZero(matrix)
+    newLen = len(newMat)
+    for i in range(newLen, length):
+        newMat.append([])
+        for j in range(0, columnLen):
+            newMat[i].append(0)
+    return newMat
 
 #Aplica Gauss seguido de Jordan a una matriz, para reducción Gauss-Jordan completa.
 def GaussJordan(Matrix: list[list]): return Jordan(Gauss(Matrix))
