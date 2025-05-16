@@ -1,9 +1,10 @@
 #Realiza una operación entre dos filas de una matriz.
 def RowOperation(R1: list, R2: list, multiplier1, multiplier2):
+    NewR2 = R2
     if(multiplier1 != 0 and multiplier2 != 0): #check that the operation is valid
         for i in range (0, len(R1)): #int i = 0; i < R1.length; i++
-            R2[i] = multiplier2*R1[i]+multiplier1*R2[i]
-        return R2
+            NewR2[i] = multiplier2*R1[i]+multiplier1*R2[i]
+        return NewR2
     else: return None
 
 #Aplica la eliminación gaussiana a una matriz.
@@ -20,6 +21,7 @@ def Gauss(Matrix: list[list]):
         while (j < matrixLen and j < len(newMatrix)):
             row = RowOperation(Matrix[i], Matrix[j], -Matrix[i][pivot], Matrix[j][pivot])
             if(not row is None): newMatrix[j] = row
+            else: newMatrix[j] = Matrix[j]
             j+=1
     return newMatrix
 
@@ -46,6 +48,7 @@ def Jordan(Matrix: list[list]):
                 for j in range(i-1, -1, -1): #(int j = i-1; j >= 0; j--)
                     row = RowOperation(newMatrix[i], newMatrix[j], -newMatrix[i][pivot], newMatrix[j][pivot])
                     if(not row is None): newMatrix[j] = row
+                    else: newMatrix[j] = Matrix[j]
     return newMatrix
 
 #Aplica Gauss seguido de Jordan a una matriz, para reducción Gauss-Jordan completa.
