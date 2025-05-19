@@ -1,7 +1,7 @@
 from GaussJordan import equationSystemSolver
 import os
 
-def getMatrix(msg = "Ingrese su matriz") -> list[list]:
+def getMatrix(msg = "Ingrese su matriz") -> list[list]:#Verifica que lo ingresado sea una matriz
     isDone = False
     matrix = None
     while(not isDone):
@@ -10,7 +10,7 @@ def getMatrix(msg = "Ingrese su matriz") -> list[list]:
         else: print("Inténtelo de nuevo")
     return matrix
 
-def leer_arreglo(msg = "Ingrese matriz"):
+def leer_arreglo(msg = "Ingrese matriz"):#Pide al usuario la matriz/vector y la ingresa
     entrada = input(msg+" como 'filas,elementos...': ").strip()
     partes = entrada.split(',')
     if len(partes) < 2:
@@ -39,18 +39,21 @@ def suma_arreglo(matriz_a, matriz_b):
 
 #OPT 2:Cambiar de forma a una matriz - Cambia la forma de una matriz
 def reshape(a, FilasN, ColumnasN):
-    elementos = [elem for fila in a for elem in fila] #recorre cada gila y cala columana y los guarda en un anueva lista
-    if len(elementos) != FilasN * ColumnasN:  #verifica si la nueva lista tiene el mismo numeri de elementos
+    elementos = [elem for fila in a for elem in fila] #recorre cada fila y cada columana y los guarda en una nueva lista
+    if len(elementos) != FilasN * ColumnasN:  #verifica si la nueva lista tiene el mismo numero de elementos
         print("Error: La nueva forma no es compatible con el número de elementos.")
         return None
-    return [elementos[i*ColumnasN:(i+1)*ColumnasN] for i in range(FilasN)]  #divide la lista de elemntos en sublistas de longitud ColumnasN y se crean las FilasN
+    return [elementos[i*ColumnasN:(i+1)*ColumnasN] for i in range(FilasN)]  #divide la lista de elementos en sublistas de longitud ColumnasN y se crean las FilasN
 
 #OPT 3:Producto punto
 def ProductoPunto(v1, v2):
     if len(v1) != len(v2): #verifica que la longitud de los vectores sea igual
         print("Error: Los vectores deben tener el mismo tamaño.")
         return None
-    return sum(v1[i] * v2[i] for i in range(len(v1))) #Multiplica los vectores en la misma posicion y dsp los suma
+    resultado = 0
+    for i in range(len(v1)):
+        resultado += v1[i] * v2[i]  # Multiplicación elemento a elemento y suma acumulada
+    return resultado
 
 def toMatrix(vectorOrMatrix: list):
     if(isinstance(vectorOrMatrix[0], list)): return vectorOrMatrix
