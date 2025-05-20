@@ -30,16 +30,14 @@ def leer_arreglo(msg = "Ingrese matriz"):#Pide al usuario la matriz/vector y la 
         for j in range(columnas):
             array[i].append(elementos[i * columnas + j])
     return array
-    #return [elementos[i*columnas:(i+1)*columnas] for i in range(filas)]
+
 
 #OPT 1:Suma de arreglos - Lee una matriz desde la entrada del usuario
 def suma_arreglo(matriz_a, matriz_b):
-    #res = [[0]*len(matriz_a) for _ in range(len(matriz_a[0]))]
     res = []
     for i in range(0, len(matriz_a)):
         res.append([])
         for j in range(0, len(matriz_a[0])):
-            #res[i][j] = matriz_a[i][j] + matriz_b[i][j]
             res[i].append(matriz_a[i][j] + matriz_b[i][j])
     return res
 
