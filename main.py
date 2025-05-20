@@ -1,5 +1,4 @@
 from GaussJordan import equationSystemSolver
-#import os
 
 def getMatrix(msg = "Ingrese su matriz") -> list[list]:#Verifica que lo ingresado sea una matriz
     isDone = False
@@ -326,7 +325,7 @@ def mainUI():
                     result = equationSystemSolver(a)
                 case 13:
                     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n") #"Limpia" la pantalla poniendo 3 millones de newlines
-                    #os.system('cls' if os.name == 'nt' else 'clear') #TODO: Esto no funciona para limpiar la pantalla en IntelliJ
+
                     print("Pantalla limpiada y memoria reiniciada.") #Ref: https://www.geeksforgeeks.org/clear-screen-python/
                 case 0:
                     print("Saliendo del programa...")
