@@ -1,5 +1,5 @@
 from GaussJordan import equationSystemSolver
-import os
+#import os
 
 def getMatrix(msg = "Ingrese su matriz") -> list[list]:#Verifica que lo ingresado sea una matriz
     isDone = False
@@ -47,7 +47,12 @@ def reshape(a, FilasN, ColumnasN):
     if len(elementos) != FilasN * ColumnasN:  #verifica si la nueva lista tiene el mismo numero de elementos
         print("Error: La nueva forma no es compatible con el número de elementos.")
         return None
-    return [elementos[i*ColumnasN:(i+1)*ColumnasN] for i in range(FilasN)]  #divide la lista de elementos en sublistas de longitud ColumnasN y se crean las FilasN
+    newShape = []
+    for i in range(FilasN):
+        newShape.append([])
+        for j in range(ColumnasN):
+            newShape[i].append(elementos[i * ColumnasN + j])
+    return newShape
 
 #OPT 3:Producto punto
 def ProductoPunto(v1, v2):
@@ -59,10 +64,12 @@ def ProductoPunto(v1, v2):
         resultado += v1[i] * v2[i]  # Multiplicación elemento a elemento y suma acumulada
     return resultado
 
+#Recibe un vector o matriz y lo convierte a una matriz (list[list]
 def toMatrix(vectorOrMatrix: list):
     if(isinstance(vectorOrMatrix[0], list)): return vectorOrMatrix
     else: return [vectorOrMatrix]
 
+#Recibe un vector en representación matriz (list[list]) y lo convierte a un vector (list). Ejemplo: [[1],[2],[3]] -> [1,2,3]
 def toVector(vectorAsMatrix: list[list]):
     parsedVector: list = []
     if(len(vectorAsMatrix[0]) == 1): #Vertical vector
@@ -76,6 +83,7 @@ def toVector(vectorAsMatrix: list[list]):
     else:
         return None
 
+#Wrapper para ProductoPunto que verifica si los argumentos son vectores válidos
 def DotProductWrapper(v1: list, v2: list):
     parsedV1: list = []
     parsedV2: list = []
@@ -104,23 +112,11 @@ def media_matriz(matriz):
         for valor in fila: #recorre cada numero de la fila
             total += valor #suma cada numero al total
 
-    elementos = 0
-    for fila in matriz:
-        elementos += len(fila)#suma la cantidad de elemntos al contador
+    elementos = len(matriz)* len(matriz[0])
 
-    if elementos == 0: #verifica si la matriz esta vacia
+    if elementos == 0: #verifica si la matriz esta vacia. Técnicamente esto debería ser imposible pero es bueno verificar
         print("Error: La matriz está vacía.")
     return total / elementos #calcula el promedio
-
-#OPT 6:Multiplica una matriz por un escalar
-def multiplicar_escalar(matriz, escalar):
-    resultado = []
-    for fila in matriz: #recorre cada fila
-        nueva_fila = []
-        for elemento in fila:
-            nueva_fila.append(elemento * escalar)
-        resultado.append(nueva_fila)
-    return resultado
 
 #OPT 7: Producto por matriz - Multiplica dos matrices
 def producto_matrices(matriz_a, matriz_b):
@@ -143,45 +139,17 @@ def suma_matrices(matriz_a, matriz_b):
             res[i][j] = matriz_a[i][j] + matriz_b[i][j]
     return res
 
-#OPT 9: Calcular determinante - Calcula el determinante de una matriz cuadrada.
-def determinante_matrices(matriz):
-    n = len(matriz)
-    det = 1.0
-    intercambios = 0
-    for i in range(n):
-        # Buscar el pivote: si el elemento en la diagonal es 0, buscar abajo
-        if matriz[i][i] == 0:
-            for k in range(i + 1, n):
-                if matriz[k][i] != 0:
-                    matriz[i], matriz[k] = matriz[k], matriz[i]
-                    intercambios += 1
-                    break
-            else:
-                det = 0
-                break
-        # Hacer ceros debajo del pivote
-        for j in range(i + 1, n):
-            if matriz[j][i] == 0:
-                continue
-            factor = matriz[j][i] / matriz[i][i]
-            for k in range(i, n):
-                matriz[j][k] = matriz[j][k] - factor * matriz[i][k]
-    # Multiplicar los elementos de la diagonal
-    for i in range(n):
-        det *= matriz[i][i]
-    # Ajustar por intercambio de filas (cambia el signo del determinante)
-    if intercambios % 2 != 0:
-        det = -det
-    return det
 # OPT 10: Inversa de una matriz - Calcula la inversa de una matriz cuadrada
 def getInverse(matrix: list[list]):
-    determinant = getDeterminant(matrix)
-    if(determinant != 0):
-        if(len(matrix) > 1 and len(matrix[0]) > 1):
-            adjugate = transpose(getCofactors(matrix))
-            return multiplyMatrixByNumber((1/determinant), adjugate)
-        else: return [[1/matrix[0][0]]] #the inverse of a single element matrix is 1/itself
-    else: return "La matriz es singular."
+    if(len(matrix) == len(matrix[0])):
+        determinant = getDeterminant(matrix)
+        if(determinant != 0):
+            if(len(matrix) > 1 and len(matrix[0]) > 1):
+                adjugate = transpose(getCofactors(matrix))
+                return multiplyMatrixByNumber((1/determinant), adjugate)
+            else: return [[1/matrix[0][0]]] #the inverse of a single element matrix is 1/itself
+        else: return "La matriz es singular."
+    else: return "La matriz no es cuadrada"
 
 # OPT 11: Transpuesta de una matriz - Calcula la transpuesta de una matriz
 def transpose(matrix: list[list]):
@@ -192,6 +160,7 @@ def transpose(matrix: list[list]):
             transposed[i].append(matrix[j][i])
     return transposed
 
+#Escribir una matriz o vector como string
 def matrixToString(matrix: list):
     matrixStr = ""
     if(isinstance(matrix[0], list)):
@@ -213,6 +182,7 @@ def evaluar_producto(matriz_a, matriz_b):
     else:
         print("Error de dimensión")
         return False
+
 # Funcion encargada de evaluar si la matriz a tiene el mismo tamaño que la matriz b
 def evaluar_suma(matriz_a, matriz_b):
     if len(matriz_a) == len(matriz_b):
@@ -222,15 +192,7 @@ def evaluar_suma(matriz_a, matriz_b):
         print("Error de dimensión")
         return False
 
-#Funcion encargada de evaluar si la matriz es cuadrada
-def evaluar_determinante(matriz):
-    if len(matriz[0]) == len(matriz):
-        return True
-    else:
-        print("Error de dimensión")
-        return False
-
-# Multiplica todos los elementos de una matriz por un número.
+#OPT 6: Multiplica todos los elementos de una matriz por un escalar.
 def multiplyMatrixByNumber(number, matrix: list[list]):
     result: list[list] = []
     for i in range(0, len(matrix)):
@@ -247,9 +209,9 @@ def getCofactors(matrix: list[list]):
         for i in range(0, length): #rows
             cofactors.append([])
             for j in range(0, length): #cols
-                newMatrix = removeRowColAt(matrix ,i, j)
+                newMatrix = removeRowColAt(matrix ,i, j) #"Tachar" columna y fila
                 currentCof = getDeterminant(newMatrix)
-                if ((i % 2 == 0 and j % 2 == 0) or (i % 2 != 0 and j % 2 != 0)):
+                if ((i % 2 == 0 and j % 2 == 0) or (i % 2 != 0 and j % 2 != 0)): #Compensa por la matriz de signos
                     cofactors[i].append(currentCof)
                 else:
                     cofactors[i].append(-currentCof)
@@ -258,15 +220,15 @@ def getCofactors(matrix: list[list]):
     return cofactors
 
 # Elimina una fila y una columna específica de una matriz.
-def removeRowColAt(matrix: list[list], row, col):
+def removeRowColAt(matrix: list[list], row, col): #ARGS: Matriz original, fila a eliminar, columna a eliminar
     newMatrix: list[list] = []
-    for i in range(0, len(matrix)-1):
-        if(i < row): currentRow = i
-        else: currentRow = i+1
+    for i in range(0, len(matrix)-1): #Es importante que el rango sea len(matrix)-1 ya que se eliminará una fila
+        if(i < row): currentRow = i #Si la fila es menor a la fila que se quiere eliminar, no se hace nada
+        else: currentRow = i+1 #Si no, se suma 1 para eliminar la fila
         newMatrix.append([])
-        for j in range(0, len(matrix[0])-1):
-            if(j < col): currentCol = j
-            else: currentCol = j+1
+        for j in range(0, len(matrix[0])-1): #Es importante que el rango sea len(matrix[0])-1 ya que se eliminará una columna
+            if(j < col): currentCol = j #Si la columna es menor a la columna que se quiere eliminar, no se hace nada
+            else: currentCol = j+1 #Si no, se suma 1 para eliminar la columna
             newMatrix[i].append(matrix[currentRow][currentCol])
     return newMatrix
 
@@ -321,12 +283,7 @@ def mainUI():
                 "0: Salir",
                 sep='\n'
             )
-            try:
-                option = int(input("Seleccione una opción: "))
-            except ValueError:
-                print("Por favor, ingrese un número válido.")
-                continue
-
+            option = int(input("Seleccione una opción:"))
             result = None
             match option:
                 case 1:
@@ -346,7 +303,7 @@ def mainUI():
                     result = media_matriz(a)
                 case 6:
                     scalar = float(input("Ingrese el escalar: "))
-                    result = multiplicar_escalar(a, scalar)
+                    result = multiplyMatrixByNumber(scalar, a)
                 case 7:
                     b = getMatrix("Ingrese su segunda matriz")
                     if evaluar_producto(a, b):
@@ -360,10 +317,7 @@ def mainUI():
                     else:
                         print("Error: La matriz no es cuadrada.")
                 case 9:
-                    if evaluar_determinante(a):
-                        result = determinante_matrices(a)
-                    else:
-                        print("Error: La matriz no es cuadrada.")
+                    getDeterminant(a)
                 case 10:
                     result = getInverse(a)
                 case 11:
@@ -371,16 +325,15 @@ def mainUI():
                 case 12:
                     result = equationSystemSolver(a)
                 case 13:
-                    os.system('cls' if os.name == 'nt' else 'clear') #TODO: Esto no funciona para limpiar la pantalla en IntelliJ
+                    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n") #"Limpia" la pantalla poniendo 3 millones de newlines
+                    #os.system('cls' if os.name == 'nt' else 'clear') #TODO: Esto no funciona para limpiar la pantalla en IntelliJ
                     print("Pantalla limpiada y memoria reiniciada.") #Ref: https://www.geeksforgeeks.org/clear-screen-python/
                 case 0:
                     print("Saliendo del programa...")
                 case _:
                     print("Operación inválida. Intente de nuevo.")
             if(option !=13 and option != 0):
-                #if(result is None): #No es necesario hacer esto ya que las funciones tienen sus propios prints para errores
-                    #print("Error: No se pudo realizar la operación.")
-                if isinstance(result, float):
+                if (isinstance(result, float) or isinstance(result, int)):
                     print('\033[92m El resultado de la operación es: \033[0m')
                     print(f'\033[92m {result} \033[0m')
                 elif isinstance(result, list):
@@ -391,5 +344,5 @@ def mainUI():
                     print('\033[92m El resultado de la operación es: \033[0m')
                     print(f'\033[92m {result} \033[0m')
 
-if __name__ == "__main__": #Ref: https://realpython.com/if-name-main-python/ probably unnecessary in this context but idc
-    mainUI()
+#main
+mainUI()
